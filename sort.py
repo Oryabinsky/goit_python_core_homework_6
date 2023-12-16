@@ -140,23 +140,20 @@ def sort(path: Path):
     for item in path.iterdir():
         if item.is_file():
             item_file_type = find_file_type(item)
+            path_to_replace = work_dir_path.joinpath(item_file_type)
+            path_to_replace.mkdir(exist_ok=True)
             if item_file_type == 'archives':
-                path_to_arc_folder = work_dir_path.joinpath('archives')
-                path_to_arc_folder.mkdir(exist_ok=True)
                 try:
                     shutil.unpack_archive(
                         item.absolute(), work_dir_path.joinpath(
-                            path_to_arc_folder, normalize(item, with_ext=False)
+                            path_to_replace, normalize(item, with_ext=False)
                             )
                         )
                 except shutil.ReadError:
                     print(f'Archive is broken: {item.absolute()}')
                 finally:
                     item.unlink()
-
             else:
-                path_to_replace = work_dir_path.joinpath(item_file_type)
-                path_to_replace.mkdir(exist_ok=True)
                 item.replace(work_dir_path.joinpath(path_to_replace, normalize(item)))
 
         elif item.is_dir():
