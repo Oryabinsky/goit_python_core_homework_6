@@ -147,7 +147,7 @@ def sort(path: Path):
                     shutil.unpack_archive(
                         item.absolute(), work_dir_path.joinpath(
                             path_to_replace, normalize(item, with_ext=False)
-                            )
+                            ).as_posix()
                         )
                 except shutil.ReadError:
                     print(f'Archive is broken: {item.absolute()}')
