@@ -174,7 +174,7 @@ if __name__ == "__main__":
             valid, comment = check_directory_exist_and_permissions(path_to_dir)
 
             if valid:
-                work_dir_path = Path(path_to_dir)
+                work_dir_path = Path(path_to_dir).absolute()
                 sort(work_dir_path)
 
                 print(f'\nResult of sort directory: {work_dir_path}', end='\n\n')
